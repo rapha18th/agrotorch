@@ -1,6 +1,19 @@
 import random
 from flask import Flask, request
 from pymessenger.bot import Bot
+import requests
+from io import BytesIO
+
+import sys
+import os
+import glob
+import re
+from pathlib import Path
+
+# Import fast.ai Library
+from fastai import *
+from fastai.vision import *
+
 
 app = Flask(__name__)       # Initializing our Flask application
 ACCESS_TOKEN = 'EAAEmm5v8LIQBAGAgnG1pj740BTp1XPKp2eSdkwEngNZC6WXZC6GiZBaq9rF20bZBlcy2kW5qNKbVBraCemZCdTZCMtYwx9sF51MJ7gs9whYe1uDayWL27kmaouyCCPZCCixbDkUhirk4khUy5tZB9PLorvYjomnSyNaVf3FgRa6CgwZDZD'
@@ -32,8 +45,14 @@ def receive_message():
                         send_message(recipient_id, response_sent_text)
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
-                        response_sent_text = get_message()
-                        send_message(recipient_id, response_sent_text)
+                        for resource in message['message'].get(['attachments']):
+                            if resource['type'] == 'image':
+                                # Fetch the payload url
+                                if 'payload' in resource:
+                                    image_url = resource['payload']['url']
+                                    pred_message = model_predict(image_url)
+                                    response = send_message(recipient_id, pred_message)
+                                    print('Response ', response)
     return "Message Processed"
 
 
@@ -57,6 +76,43 @@ def send_message(recipient_id, response):
     # sends user the text message provided via input response parameter
     bot.send_text_message(recipient_id, response)
     return "success"
+
+path = Path("path")
+classes = ['Apple___Apple_scab','Apple___Black_rot','Apple___Cedar_apple_rust'
+,'Apple___healthy','Blueberry___healthy','Cherry_(including_sour)___Powdery_mildew',
+'Cherry_(including_sour)___healthy','Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot',
+'Corn_(maize)___Common_rust_','Corn_(maize)___Northern_Leaf_Blight',
+'Corn_(maize)___healthy','Grape___Black_rot','Grape___Esca_(Black_Measles)',
+'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)',
+'Grape___healthy','Orange___Haunglongbing_(Citrus_greening)',
+'Peach___Bacterial_spot','Peach___healthy','Pepper,_bell___Bacterial_spot',
+'Pepper,_bell___healthy','Potato___Early_blight','Potato___Late_blight',
+'Potato___healthy','Raspberry___healthy','Soybean___healthy',
+'Squash___Powdery_mildew','Strawberry___Leaf_scorch','Strawberry___healthy',
+'Tomato___Bacterial_spot','Tomato___Early_blight','Tomato___Late_blight',
+'Tomato___Leaf_Mold','Tomato___Septoria_leaf_spot',
+'Tomato___Spider_mites Two-spotted_spider_mite','Tomato___Target_Spot',
+'Tomato___Tomato_Yellow_Leaf_Curl_Virus','Tomato___Tomato_mosaic_virus',
+'Tomato___healthy','background']
+
+
+
+data2 = ImageDataBunch.single_from_classes(path, classes, ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)
+
+path1 = Path("./path/models")
+learn = load_learner(path1, 'export.pkl')
+
+
+@app.route('/analyse', methods=['GET', 'POST'])
+def model_predict():
+    """
+       model_predict will return the preprocessed image
+    """
+    url = flask.request.args.get("url")
+    response = requests.get(url)
+    img = open_image(BytesIO(response.content))
+    pred_class,pred_idx,outputs = learn.predict(img)
+    return pred_class
 
 
 # Add description here about this if statement.
