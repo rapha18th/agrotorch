@@ -100,7 +100,7 @@ classes = ['Apple___Apple_scab','Apple___Black_rot','Apple___Cedar_apple_rust'
 data2 = ImageDataBunch.single_from_classes(path, classes, ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)
 
 path1 = Path("./path/models")
-learn = load_learner(path1, 'export.pkl')
+learn = load_learner(path1, 'export_model.pkl')
 
 
 @app.route('/analyse', methods=['GET', 'POST'])
