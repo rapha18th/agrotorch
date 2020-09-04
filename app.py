@@ -3,12 +3,14 @@ from flask import Flask, request
 from pymessenger.bot import Bot
 import requests
 from io import BytesIO
-
+import flask
 import sys
 import os
 import glob
 import re
 from pathlib import Path
+
+import fastai
 
 # Import fast.ai Library
 from fastai import *
@@ -99,20 +101,20 @@ classes = ['Apple___Apple_scab','Apple___Black_rot','Apple___Cedar_apple_rust'
 
 data2 = ImageDataBunch.single_from_classes(path, classes, ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)
 
-path1 = Path("./path/models")
+path1 = Path("./models")
 learn = load_learner(path1, 'export_model.pkl')
 
 
 @app.route('/analyse', methods=['GET', 'POST'])
-def model_predict():
+def model_predict(url):
     """
        model_predict will return the preprocessed image
     """
-    url = flask.request.args.get("url")
+    #url = flask.request.args.get("url")
     response = requests.get(url)
     img = open_image(BytesIO(response.content))
     pred_class,pred_idx,outputs = learn.predict(img)
-    return pred_class
+    return str(pred_class)
 
 
 # Add description here about this if statement.
