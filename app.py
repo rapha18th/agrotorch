@@ -47,14 +47,10 @@ def receive_message():
                         send_message(recipient_id, response_sent_text)
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
-                        for resource in message['message'].get(['attachments']):
-                            if resource['type'] == 'image':
-                                # Fetch the payload url
-                                if 'payload' in resource:
-                                    image_url = resource['payload']['url']
-                                    pred_message = model_predict(image_url)
-                                    response = send_message(recipient_id, pred_message)
-                                    print('Response ', response)
+                        image_url = message["message"]["attachments"][0]["payload"]["url"]
+                        pred_message = model_predict(image_url)
+                        send_message(recipient_id, pred_message)
+    
     return "Message Processed"
 
 
