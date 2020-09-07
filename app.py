@@ -113,8 +113,8 @@ def model_predict(url):
     pred_class,pred_idx,outputs = learn.predict(img)
     img_message = str(pred_class)
     wiki_msg = img_message[img_message.find('___'):]
-    ny = wk.summary(wiki_msg, sentences = 3)
-    return {'Prediction': img_message,'Description': ny}
+    wiki_info = wk.summary(wiki_msg, sentences = 3)
+    return {'Prediction': img_message,'Description': wiki_info}
 
 
 
