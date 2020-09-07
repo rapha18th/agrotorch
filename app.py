@@ -114,8 +114,7 @@ def model_predict(url):
     img_message = str(pred_class)
     wiki_msg = img_message[img_message.find('___'):]
     wiki_info = wk.summary(wiki_msg, sentences = 4)
-    wiki_dict ={'Diagnosis': img_message,'Description': wiki_info}
-    return str(wiki_dict)
+    return str(img_message, wiki_info)
 
 
 
