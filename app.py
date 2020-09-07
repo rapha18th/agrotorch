@@ -107,11 +107,15 @@ def model_predict(url):
     """
        model_predict will return the preprocessed image
     """
-    #url = flask.request.args.get("url")
+    # url = flask.request.args.get("url")
     response = requests.get(url)
     img = open_image(BytesIO(response.content))
     pred_class,pred_idx,outputs = learn.predict(img)
-    return str(pred_class)
+    img_message = str(pred_class)
+    wiki_msg = img_message[img_message.find('___'):]
+    ny = wk.summary(wiki_msg, sentences = 3)
+    return {'Prediction': img_message,'Description': ny}
+
 
 
 # Add description here about this if statement.
