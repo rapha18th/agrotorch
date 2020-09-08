@@ -17,12 +17,22 @@ import json
 from fastai import *
 from fastai.vision import *
 
+from enum import Enum
+from requests_toolbelt import MultipartEncoder
+
+from pymessenger import utils
+
+
 
 app = Flask(__name__)       # Initializing our Flask application
 ACCESS_TOKEN = 'EAAEmm5v8LIQBAGAgnG1pj740BTp1XPKp2eSdkwEngNZC6WXZC6GiZBaq9rF20bZBlcy2kW5qNKbVBraCemZCdTZCMtYwx9sF51MJ7gs9whYe1uDayWL27kmaouyCCPZCCixbDkUhirk4khUy5tZB9PLorvYjomnSyNaVf3FgRa6CgwZDZD'
 VERIFY_TOKEN = 'Yeayyeahyeahs'
 bot = Bot(ACCESS_TOKEN)
 
+class NotificationType(Enum):
+    regular = "REGULAR"
+    silent_push = "SILENT_PUSH"
+    no_push = "NO_PUSH"
 # Importing standard route and two requst types: GET and POST.
 # We will receive messages that Facebook sends our bot at this endpoint
 @app.route('/', methods=['GET', 'POST'])
@@ -46,7 +56,7 @@ def receive_message():
                    # x = message['message']['text'] 
                     if message['message'].get('text'):
                         x = message['message']['text'].lower()
-                        if x in ['hi', 'hello', 'get started', 'hey']: 
+                        if x == "Hey": 
                             quick_response(recipient_id,
                             "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
                                 'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
@@ -124,6 +134,19 @@ def send_message(recipient_id, response):
     # sends user the text message provided via input response parameter
     bot.send_text_message(recipient_id, response)
     return "success"
+
+def send_video_url(self, recipient_id, video_url, notification_type=NotificationType.regular):
+        """Send video to specified recipient using URL.
+        Video should be MP4 or MOV, but supports more (https://www.facebook.com/help/218673814818907).
+        https://developers.facebook.com/docs/messenger-platform/send-api-reference/video-attachment
+        Input:
+            recipient_id: recipient id to send to
+            video_url: url of video to be sent
+        Output:
+            Response from API as <dict>
+        """
+        return self.send_attachment_url(recipient_id, "video", video_url, notification_type)
+
 
 path = Path("path")
 classes = ['Apple___Apple_scab','Apple___Black_rot','Apple___Cedar_apple_rust'
