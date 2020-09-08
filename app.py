@@ -43,22 +43,21 @@ def receive_message():
                 if message.get('message'):
                     # Facebook Messenger ID for user so we know where to send response back to
                     recipient_id = message['sender']['id']
-                    
-                    x = message['message'].get('text')
+                   # x = message['message']['text'] 
                     if message['message'].get('text'):
-                       
+                        x = message['message']['text'] 
                         quick_response(recipient_id,
                             "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
                                 'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
                                 
-                    elif x == "maize":
-                        send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
-                    elif x == "soybean":
-                        send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
-                    elif x == "potato":
-                        send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
-                    elif x == "tomato":
-                        send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
+                        if x == "maize":
+                            send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
+                        elif x == "soybean":
+                            send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                        elif x == "potato":
+                            send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                        elif x == "tomato":
+                            send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
