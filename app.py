@@ -135,7 +135,7 @@ def send_message(recipient_id, response):
     bot.send_text_message(recipient_id, response)
     return "success"
 
-def send_video_url(self, recipient_id, video_url, notification_type=NotificationType.regular):
+def send_video_url(self, recipient_id, video_url):
         """Send video to specified recipient using URL.
         Video should be MP4 or MOV, but supports more (https://www.facebook.com/help/218673814818907).
         https://developers.facebook.com/docs/messenger-platform/send-api-reference/video-attachment
@@ -145,7 +145,7 @@ def send_video_url(self, recipient_id, video_url, notification_type=Notification
         Output:
             Response from API as <dict>
         """
-        return self.send_attachment_url(recipient_id, "video", video_url, notification_type)
+        return self.send_attachment_url(recipient_id, "video", video_url)
 
 
 path = Path("path")
