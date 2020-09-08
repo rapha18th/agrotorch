@@ -123,6 +123,10 @@ def send_message(recipient_id, response):
     bot.send_text_message(recipient_id, response)
     return "success"
 
+def send_video_url(recipient_id, url):
+    bot.send_video_url(recipient_id, url)
+    return "sucess"
+    
 path = Path("path")
 classes = ['Apple___Apple_scab','Apple___Black_rot','Apple___Cedar_apple_rust'
 ,'Apple___healthy','Blueberry___healthy','Cherry_(including_sour)___Powdery_mildew',
