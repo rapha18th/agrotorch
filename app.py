@@ -43,7 +43,8 @@ def receive_message():
                 if message.get('message'):
                     # Facebook Messenger ID for user so we know where to send response back to
                     recipient_id = message['sender']['id']
-                    x = output["entry"][0]["messaging"][0]["message"]["text"].lower()
+                    
+                    x = message['message'].get('text')
                     if message['message'].get('text'):
                        
                         quick_response(recipient_id,
