@@ -66,7 +66,8 @@ def receive_message():
                         elif x == "tomato":
                             send_message(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                         else:
-                            return get_message()
+                            d_response = get_message()
+                            send_message(recipient_id, d_response)
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
@@ -74,7 +75,8 @@ def receive_message():
                             pred_message = model_predict(image_url)
                             send_message(recipient_id, pred_message)
                     else:
-                        return get_message()
+                        d_response = get_message()
+                        send_message(recipient_id, d_response)
     
     return "Message Processed"
 
