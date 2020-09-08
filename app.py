@@ -62,13 +62,13 @@ def receive_message():
                                 'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
                                 
                         elif x == "maize":
-                            send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
+                            send_video_url(recipient_id, video_url="https://youtu.be/AwkXRwCPHI0")
                         elif x == "soybean":
-                            send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                            send_video_url(recipient_id, video_url="https://youtu.be/O0TOGKSWsMs")
                         elif x == "potato":
-                            send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                            send_video_url(recipient_id, video_url="https://youtu.be/yy9B2ctQBt0")
                         elif x == "tomato":
-                            send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
+                            send_video_url(recipient_id, video_url="https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
