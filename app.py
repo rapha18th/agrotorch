@@ -46,7 +46,7 @@ def receive_message():
                     if message['message'].get('text'):
                         quick_response(recipient_id,
                             "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
-                                'Maize', 'Soybean', 'Potato', 'Tomato', postcard1="Maize", postcard2="Soybean", postcard3="Potato", postcard4="Tomato")
+                                'maize', 'moybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
                                 
                     if 'maize' in message['message']['text']:
                         send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
