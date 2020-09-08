@@ -11,6 +11,7 @@ import re
 from pathlib import Path
 import wikipedia as wk
 import fastai
+import json
 
 # Import fast.ai Library
 from fastai import *
@@ -45,6 +46,19 @@ def receive_message():
                     if message['message'].get('text'):
                         response_sent_text = get_message()
                         send_message(recipient_id, response_sent_text)
+                    if message in ['hi', 'hello', 'get started', 'bot']:
+                                quick_response(recipient_id,
+                                               "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
+                                               'Maize', 'Soybean', 'Potato', 'Tomato', postcard1="Maize", postcard2="Soybean", postcard3="Potato", postcard4="Tomato")
+                                
+                    elif 'maize' in message:
+                                send_message(recipient_id, response_sent_text)
+                    elif 'Soybean' in message:
+                                send_message(recipient_id, response_sent_text)
+                    elif 'Potato' in message:
+                                send_message(recipient_id, response_sent_text)
+                    elif 'Tomato' in message:
+                                send_message(recipient_id, response_sent_text)
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
@@ -53,6 +67,41 @@ def receive_message():
                             send_message(recipient_id, pred_message)
     
     return "Message Processed"
+
+def quick_response(sender_id, message_text, title1, title2, title3, title4, postcard1="", postcard2="",postcard3="", postcard4=""):
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+
+                      params={"access_token": ACCESS_TOKEN},
+
+                      headers={"Content-Type": "application/json"},
+
+                      data=json.dumps({
+                          "recipient": {"id": sender_id},
+                          "messaging_type": "RESPONSE",
+                          "message": {
+                              "text": message_text,
+                              "quick_replies": [
+                                  {
+                                      "content_type": "text",
+                                      "title": title1,
+                                      "payload": postcard1
+                                  }, {
+                                      "content_type": "text",
+                                      "title": title2,
+                                      "payload": postcard2
+                                  },
+                                     {
+                                      "content_type": "text",
+                                      "title": title3,
+                                      "payload": postcard3
+                                  }, {
+                                      "content_type": "text",
+                                      "title": title4,
+                                      "payload": postcard4
+                                  }
+                              ]
+                          }
+                      }))
 
 
 def verify_fb_token(token_sent):
@@ -114,10 +163,14 @@ def model_predict(url):
     img_message = str(pred_class)
     wiki_msg = img_message[img_message.find('___'):]
     wiki_info = wk.summary(wiki_msg, sentences = 3)
-    wiki_result=(f'Diagnosis:{img_message}\n'
+    wiki_result=(f'Diagnosis: {img_message}\n'
             f'\n'
-           f'Definition:{wiki_info}')
+           f'Definition: {wiki_info}')
     return wiki_result
+
+def send_image_url(recipient_id, theimage):
+    bot.send_image_url(recipient_id,theimage)
+    return "success"
 
 
 
