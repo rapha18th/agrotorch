@@ -19,8 +19,7 @@ from fastai.vision import *
 
 
 app = Flask(__name__)       # Initializing our Flask application
-#ACCESS_TOKEN = 'EAAEmm5v8LIQBAGAgnG1pj740BTp1XPKp2eSdkwEngNZC6WXZC6GiZBaq9rF20bZBlcy2kW5qNKbVBraCemZCdTZCMtYwx9sF51MJ7gs9whYe1uDayWL27kmaouyCCPZCCixbDkUhirk4khUy5tZB9PLorvYjomnSyNaVf3FgRa6CgwZDZD'
-#VERIFY_TOKEN = 'Yeayyeahyeahs'
+
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 bot = Bot(ACCESS_TOKEN)
@@ -65,9 +64,7 @@ def receive_message():
                             send_message(recipient_id, "https://youtu.be/yy9B2ctQBt0")
                         elif x == "tomato":
                             send_message(recipient_id, "https://youtu.be/qXdw-hBiu1A")
-                        else:
-                            d_response = get_message()
-                            send_message(recipient_id, d_response)
+                    
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
@@ -125,8 +122,8 @@ def verify_fb_token(token_sent):
 
 
 def get_message():
-    sample_responses = ["You are so cool", "We're proud of you",
-                        "Keep on being cool!", "We're greatful to know you :)"]
+    sample_responses = ["Type 'Hey' case sensitive to see the video menu or upload a plant leaf image to run a diagnosis",
+                        "I'm not yet that smart, type 'Hey' or upload a leaf image"]
     # return selected item to the user
     return random.choice(sample_responses)
 
