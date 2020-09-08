@@ -48,14 +48,14 @@ def receive_message():
                             "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
                                 'Maize', 'Soybean', 'Potato', 'Tomato', postcard1="Maize", postcard2="Soybean", postcard3="Potato", postcard4="Tomato")
                                 
-                        if 'maize' in message:
-                            callback = send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
-                        if 'Soybean' in message:
-                             callback = send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
-                        if 'Potato' in message:
-                             callback = send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
-                        if 'Tomato' in message:
-                            callback = send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
+                        if 'maize' in message['message']['text'][0]:
+                            send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
+                        if 'Soybean' in message['message']['text'][0]:
+                            send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                        if 'Potato' in message['message']['text'][0]:
+                            send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                        if 'Tomato' in message['message']['text'][0]:
+                            send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
