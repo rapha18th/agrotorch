@@ -19,8 +19,10 @@ from fastai.vision import *
 
 
 app = Flask(__name__)       # Initializing our Flask application
-ACCESS_TOKEN = 'EAAEmm5v8LIQBAGAgnG1pj740BTp1XPKp2eSdkwEngNZC6WXZC6GiZBaq9rF20bZBlcy2kW5qNKbVBraCemZCdTZCMtYwx9sF51MJ7gs9whYe1uDayWL27kmaouyCCPZCCixbDkUhirk4khUy5tZB9PLorvYjomnSyNaVf3FgRa6CgwZDZD'
-VERIFY_TOKEN = 'Yeayyeahyeahs'
+#ACCESS_TOKEN = 'EAAEmm5v8LIQBAGAgnG1pj740BTp1XPKp2eSdkwEngNZC6WXZC6GiZBaq9rF20bZBlcy2kW5qNKbVBraCemZCdTZCMtYwx9sF51MJ7gs9whYe1uDayWL27kmaouyCCPZCCixbDkUhirk4khUy5tZB9PLorvYjomnSyNaVf3FgRa6CgwZDZD'
+#VERIFY_TOKEN = 'Yeayyeahyeahs'
+ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 bot = Bot(ACCESS_TOKEN)
 
 class NotificationType(Enum):
@@ -64,7 +66,7 @@ def receive_message():
                         elif x == "tomato":
                             send_message(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                         else:
-                            response = get_message()
+                            return get_message()
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
@@ -72,7 +74,7 @@ def receive_message():
                             pred_message = model_predict(image_url)
                             send_message(recipient_id, pred_message)
                     else:
-                        response = get_message()
+                        return get_message()
     
     return "Message Processed"
 
