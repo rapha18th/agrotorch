@@ -55,11 +55,11 @@ def receive_message():
                             response_text = get_message()
                             send_message(recipient_id, response_text)
                         elif x == "soybean":
-                            send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                            send_message(recipient_id, "https://youtu.be/O0TOGKSWsMs")
                         elif x == "potato":
-                            send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                            send_message(recipient_id, "https://youtu.be/yy9B2ctQBt0")
                         elif x == "tomato":
-                            send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
+                            send_message(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
