@@ -44,18 +44,18 @@ def receive_message():
                     # Facebook Messenger ID for user so we know where to send response back to
                     recipient_id = message['sender']['id']
                     if message['message'].get('text'):
-                        response_sent_text = quick_response(recipient_id,
-                                               "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
-                                               'Maize', 'Soybean', 'Potato', 'Tomato', postcard1="Maize", postcard2="Soybean", postcard3="Potato", postcard4="Tomato")
+                        quick_response(recipient_id,
+                            "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
+                                'Maize', 'Soybean', 'Potato', 'Tomato', postcard1="Maize", postcard2="Soybean", postcard3="Potato", postcard4="Tomato")
                                 
                     elif 'maize' in message:
-                        send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
+                        callback = send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
                     elif 'Soybean' in message:
-                        send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                        callback = send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
                     elif 'Potato' in message:
-                        send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                        callback = send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
                     elif 'Tomato' in message:
-                        send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
+                        callback = send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
@@ -164,10 +164,6 @@ def model_predict(url):
             f'\n'
            f'Definition: {wiki_info}')
     return wiki_result
-
-def send_image_url(recipient_id, theimage):
-    bot.send_image_url(recipient_id,theimage)
-    return "success"
 
 
 
