@@ -48,13 +48,13 @@ def receive_message():
                             "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
                                 'maize', 'moybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
                                 
-                    if 'maize' in message['message']['text']:
+                    elif 'maize' in message:
                         send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
-                    if 'Soybean' in message['message']['text']:
+                    elif 'soybean' in message:
                         send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
-                    if 'Potato' in message['message']['text']:
+                    elif 'potato' in message:
                         send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
-                    if 'Tomato' in message['message']['text']:
+                    elif 'tomato' in message:
                         send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
