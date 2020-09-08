@@ -45,7 +45,7 @@ def receive_message():
                     callback = ''
                     recipient_id = message['sender']['id']
                     if message['message'].get('text'):
-                        quick_reply_message - "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below "
+                        quick_reply_message = "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below "
                         quick_rep_option = (["maize","stark_payload"],["soybean","lan_payload"],["potato","tar_payload"],["tomato","None"])
                         send_quickreply(recipient_id,quick_reply_message,quick_rep_option)
 
