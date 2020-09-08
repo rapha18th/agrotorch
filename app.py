@@ -44,27 +44,24 @@ def receive_message():
                     # Facebook Messenger ID for user so we know where to send response back to
                     recipient_id = message['sender']['id']
                     if message['message'].get('text'):
-                        msg = message['message']['text']
-                        message = msg.lower()
-                        if message in ['hi', 'hello', 'get started', 'bot']:
-                            quick_response(recipient_id,
-                                "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
+                        quick_response(recipient_id,
+                            "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
                                 'maize', 'moybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
                                 
-                        elif 'maize' in message:
-                            send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
-                        elif 'soybean' in message:
-                            send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
-                        elif 'potato' in message:
-                            send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
-                        elif 'tomato' in message:
-                            send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
+                    elif 'maize' in message['message']['text'][0]:
+                        send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
+                    elif 'soybean' in message['message']['text'][0]:
+                        send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                    elif 'potato' in message['message']['text'][0]:
+                        send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                    elif 'tomato' in message['message']['text'][0]:
+                        send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
-                        if message['message'].get('attachments'):
-                            if message['message']['attachments'][0]['type'] == "image":
-                                image_url = message["message"]["attachments"][0]["payload"]["url"]
-                                pred_message = model_predict(image_url)
-                                send_message(recipient_id, pred_message)
+                    if message['message'].get('attachments'):
+                        if message['message']['attachments'][0]['type'] == "image":
+                            image_url = message["message"]["attachments"][0]["payload"]["url"]
+                            pred_message = model_predict(image_url)
+                            send_message(recipient_id, pred_message)
     
     return "Message Processed"
 
