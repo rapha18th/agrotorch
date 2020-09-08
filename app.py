@@ -46,7 +46,26 @@ def receive_message():
                     # Facebook Messenger ID for user so we know where to send response back to
                     callback = ''
                     recipient_id = message['sender']['id']
-                    if message['message'].get('text'):
+                    if message.get('message'):
+                        if 'text' in message['message']:
+                            get_msg = message['message']
+                            if 'is_echo' not in get_msg:
+                                mess = message['message']['text']
+                                message = mess.lower()
+
+                            if message in ['hi', 'hello', 'get started', 'bot']:
+                                quick_response(recipient_id,
+                                    "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
+                                        'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
+                            elif 'maize' in message:
+                                callback = send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
+                            elif 'soybean' in message:
+                                callback = send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                            elif 'potato' in message:
+                                callback = send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                            elif 'tomato' in message:
+                                callback = send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A") 
+                    '''if message['message'].get('text'):
                         quick_response(recipient_id,
                             "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
                                 'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
@@ -58,7 +77,7 @@ def receive_message():
                     elif 'potato' in message:
                         callback = send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
                     elif 'tomato' in message:
-                        callback = send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
+                        callback = send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")'''
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
