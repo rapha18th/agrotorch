@@ -48,21 +48,25 @@ def receive_message():
                         quick_response(recipient_id,
                             "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
                                 'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
-                                
-                    elif 'maize' in str(message):
-                        send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
-                    elif 'soybean' in str(message):
-                        send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
-                    elif 'potato' in str(message):
-                        send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
-                    elif 'tomato' in str(message):
-                        send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
+                        
+                        if message['message'].get('quick_reply'):
+    							# HANDLE TEXT MESSAGE WITH QUICK REPLY
+							payload = message['message']['quick_reply']['payload']
+			      
+                        elif 'maize' in payload:
+                            send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
+                        elif 'soybean' in payload:
+                            send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                        elif 'potato' in payload:
+                            send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                        elif 'tomato' in payload:
+                            send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
-                    if message['message'].get('attachments'):
-                        if message['message']['attachments'][0]['type'] == "image":
-                            image_url = message["message"]["attachments"][0]["payload"]["url"]
-                            pred_message = model_predict(image_url)
-                            send_message(recipient_id, pred_message)
+                        if message['message'].get('attachments'):
+                            if message['message']['attachments'][0]['type'] == "image":
+                                image_url = message["message"]["attachments"][0]["payload"]["url"]
+                                pred_message = model_predict(image_url)
+                                send_message(recipient_id, pred_message)
     
     return "Message Processed"
 
