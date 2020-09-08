@@ -51,7 +51,8 @@ def receive_message():
                                 'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
                                 
                         if x == "maize":
-                            send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
+                            response_text = get_message()
+                            send_message(recipient_id, response_text)
                         elif x == "soybean":
                             send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
                         elif x == "potato":
