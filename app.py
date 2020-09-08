@@ -23,8 +23,6 @@ ACCESS_TOKEN = 'EAAEmm5v8LIQBAGAgnG1pj740BTp1XPKp2eSdkwEngNZC6WXZC6GiZBaq9rF20bZ
 VERIFY_TOKEN = 'Yeayyeahyeahs'
 bot = Bot(ACCESS_TOKEN)
 
-postcard = []
-
 # Importing standard route and two requst types: GET and POST.
 # We will receive messages that Facebook sends our bot at this endpoint
 @app.route('/', methods=['GET', 'POST'])
@@ -46,38 +44,19 @@ def receive_message():
                     # Facebook Messenger ID for user so we know where to send response back to
                     callback = ''
                     recipient_id = message['sender']['id']
-                    if message.get('message'):
-                        if 'text' in message['message']:
-                            get_msg = message['message']
-                            if 'is_echo' not in get_msg:
-                                mess = message['message']['text']
-                                message = mess.lower()
+                    if message['message'].get('text'):
+                        quick_reply_message - "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below "
+                        quick_rep_option = (["maize","stark_payload"],["soybean","lan_payload"],["potato","tar_payload"],["tomato","None"])
+                        send_quickreply(recipient_id,quick_reply_message,quick_rep_option)
 
-                            if message in ['hi', 'hello', 'get started', 'bot']:
-                                quick_response(recipient_id,
-                                    "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
-                                        'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
-                            elif 'maize' in message:
-                                callback = send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
-                            elif 'soybean' in message:
-                                callback = send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
-                            elif 'potato' in message:
-                                callback = send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
-                            elif 'tomato' in message:
-                                callback = send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A") 
-                    '''if message['message'].get('text'):
-                        quick_response(recipient_id,
-                            "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
-                                'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
-                                
-                    elif 'maize' in message:
-                        callback = send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
-                    elif 'soybean' in message:
-                        callback = send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
-                    elif 'potato' in message:
-                        callback = send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
-                    elif 'tomato' in message:
-                        callback = send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")'''
+                    elif 'maize' == quick_rep_option:
+                        send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
+                    elif 'soybean'== quick_rep_option:
+                        send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                    elif 'potato' == quick_rep_option:
+                        send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                    elif 'tomato' == quick_rep_option:
+                        send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
