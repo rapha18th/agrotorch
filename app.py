@@ -53,7 +53,7 @@ def receive_message():
                         x = message['message']['text']
                         if x == "Hey": 
                             quick_response(recipient_id,
-                            "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
+                            "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of a plant leaf or choose what you want to learn below ",
                                 'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
                                 
                         elif x == "maize":
