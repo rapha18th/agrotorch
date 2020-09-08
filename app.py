@@ -45,12 +45,13 @@ def receive_message():
                     recipient_id = message['sender']['id']
                    # x = message['message']['text'] 
                     if message['message'].get('text'):
-                        x = message['message']['text'] 
-                        quick_response(recipient_id,
+                        x = message['message']['text']
+                        if x == "hello": 
+                            quick_response(recipient_id,
                             "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
                                 'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
                                 
-                        if x == "maize":
+                        elif x == "maize":
                             response_text = get_message()
                             send_message(recipient_id, response_text)
                         elif x == "soybean":
