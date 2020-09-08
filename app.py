@@ -71,9 +71,9 @@ def receive_message():
                             image_url = message["message"]["attachments"][0]["payload"]["url"]
                             pred_message = model_predict(image_url)
                             send_message(recipient_id, pred_message)
-                    else:
-                        d_response = get_message()
-                        send_message(recipient_id, d_response)
+                else:
+                    d_response = get_message()
+                    send_message(recipient_id, d_response)
     
     return "Message Processed"
 
