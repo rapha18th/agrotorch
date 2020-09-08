@@ -49,7 +49,7 @@ def receive_message():
                     recipient_id = message['sender']['id']
                    # x = message['message']['text'] 
                     if message['message'].get('text'):
-                        x = message['message']['text'].lower()
+                        x = message['message']['text']
                         if x == "Hey": 
                             quick_response(recipient_id,
                             "Hi my name is Agrotorch and I'm here to help, to start you can upload an image of diseased plant or choose what you want to learn below ",
