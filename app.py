@@ -52,14 +52,13 @@ def receive_message():
                                 'maize', 'soybean', 'potato', 'tomato', postcard1="maize", postcard2="soybean", postcard3="potato", postcard4="tomato")
                                 
                         elif x == "maize":
-                            response_text = get_message()
-                            send_message(recipient_id, response_text)
+                            send_video_url(recipient_id, "https://youtu.be/AwkXRwCPHI0")
                         elif x == "soybean":
-                            send_message(recipient_id, "https://youtu.be/O0TOGKSWsMs")
+                            send_video_url(recipient_id, "https://youtu.be/O0TOGKSWsMs")
                         elif x == "potato":
-                            send_message(recipient_id, "https://youtu.be/yy9B2ctQBt0")
+                            send_video_url(recipient_id, "https://youtu.be/yy9B2ctQBt0")
                         elif x == "tomato":
-                            send_message(recipient_id, "https://youtu.be/qXdw-hBiu1A")
+                            send_video_url(recipient_id, "https://youtu.be/qXdw-hBiu1A")
                     # if user send us a GIF, photo, video or any other non-text item
                     if message['message'].get('attachments'):
                         if message['message']['attachments'][0]['type'] == "image":
@@ -125,10 +124,6 @@ def send_message(recipient_id, response):
     # sends user the text message provided via input response parameter
     bot.send_text_message(recipient_id, response)
     return "success"
-
-def send_video_url(recipient_id, url):
-    bot.send_video_url(recipient_id, url)
-    return "sucess"
 
 path = Path("path")
 classes = ['Apple___Apple_scab','Apple___Black_rot','Apple___Cedar_apple_rust'
